@@ -51,6 +51,14 @@ describe('AttentionHero digest consistency', () => {
     expect(screen.queryAllByRole('listitem')).toHaveLength(0);
   });
 
+  test('a genuine first visit never says "since your last visit"', () => {
+    const items = [item('AAPL', 'Stable', 0), item('MSFT', 'Stable', 0)].map((i) => ({ ...i, last_seen: null }));
+    render(<AttentionHero items={items} {...loaded} />);
+    expect(screen.getByRole('heading')).toHaveTextContent('Now tracking 2 stocks');
+    expect(screen.queryByText(/since your last visit/)).not.toBeInTheDocument();
+    expect(screen.getByText(/nothing to compare against yet/)).toBeInTheDocument();
+  });
+
   test('empty watchlist prompts to add a stock', () => {
     render(<AttentionHero items={[]} {...loaded} />);
     expect(screen.getByRole('heading')).toHaveTextContent('Your watchlist is empty');

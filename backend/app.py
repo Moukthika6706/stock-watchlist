@@ -539,8 +539,23 @@ def remove_from_watchlist(stock_id):
 # Data ingestion - manual trigger, no JWT by design (internal/admin use).
 # A scheduler was deliberately left out to keep the demo simple and debuggable.
 # --------------------------------------------------------------------------
+def demo_mode_enabled():
+    """DEMO_MODE=true blocks live polling so a stray POST /poll-prices cannot
+    overwrite the seeded demo snapshots with the frozen holiday-weekend close.
+    Unset counts as ON (fail-safe); set DEMO_MODE=false in backend/.env and
+    restart the server to poll for real."""
+    return os.getenv('DEMO_MODE', 'true').strip().lower() not in ('0', 'false', 'no', 'off')
+
+
 @app.route('/poll-prices', methods=['POST'])
 def poll_prices():
+    if demo_mode_enabled():
+        return error(
+            "Polling is disabled while DEMO_MODE is on: a real poll would overwrite the seeded demo "
+            "snapshots with the frozen Friday close. Set DEMO_MODE=false in backend/.env and restart "
+            "the server to re-enable it.",
+            423,
+        )
     if not _poll_lock.acquire(blocking=False):
         return error("A poll is already in progress; wait for it to finish", 409)
     try:
