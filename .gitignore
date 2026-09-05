@@ -1,2 +1,18 @@
+# secrets and local-only config
+.env
+.env.*
+!.env.example
+DEMO_CREDENTIALS.md
+
+# python
+__pycache__/
+*.pyc
 .venv/
-DEMO.md
+backend/venv/
+backend/seed_demo_state.json
+
+# node
+node_modules/
+frontend/build/
+frontend/coverage/
+npm-debug.log*
