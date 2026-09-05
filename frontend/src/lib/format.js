@@ -103,8 +103,10 @@ export function changeSentence(item) {
   const ratio = latest.volume_ratio;
   const milestones = latest.milestones || [];
 
+  // Volume is only worth a clause when it actually counted (the backend's spike
+  // flag); "on 1.0x normal volume" is noise, not information.
   const clauses = [];
-  if (ratio != null) clauses.push(`on ${ratio.toFixed(1)}x normal volume`);
+  if (latest.volume_spike && ratio != null) clauses.push(`on ${ratio.toFixed(1)}x normal volume`);
   if (milestones.includes('near_52w_high')) clauses.push('trading near its 52-week high');
   else if (milestones.includes('near_52w_low')) clauses.push('trading near its 52-week low');
 

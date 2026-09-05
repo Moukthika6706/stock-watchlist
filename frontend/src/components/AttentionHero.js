@@ -40,11 +40,13 @@ export default function AttentionHero({ items, loading, hasLoaded, error }) {
   if (total === 0) {
     title = 'Your watchlist is empty';
     sub = 'Add a stock and we will start tracking what changes between your visits.';
+  } else if (!visit) {
+    // Genuine first visit: no last_seen anywhere, so there is no "since" yet.
+    title = `Now tracking ${total} ${total === 1 ? 'stock' : 'stocks'}`;
+    sub = `This is your first look, so there is nothing to compare against yet. From your next visit on, this space reports what changed since you last looked.${n > 0 ? ' Worth a glance right now:' : ''}`;
   } else {
     title = n === 0 ? 'Nothing significant since your last visit' : `${n} ${n === 1 ? 'stock needs' : 'stocks need'} your attention`;
-    sub = visit
-      ? `Last visit ${visit}. ${n} of ${total} ${total === 1 ? 'stock' : 'stocks'} moved enough to mention.`
-      : `This is your first look at ${total === 1 ? 'this stock' : `these ${total} stocks`}. Come back later and we will show you what moved.`;
+    sub = `Last visit ${visit}. ${n} of ${total} ${total === 1 ? 'stock' : 'stocks'} moved enough to mention.`;
   }
 
   return (
