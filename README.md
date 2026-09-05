@@ -1,7 +1,7 @@
 # StockSense — See what changed. Know what matters.
 
 <p align="center">
-  <img src="logo.png" width="700">
+  <img src="https://www.google.com/imgres?q=groww%20logo&imgurl=https%3A%2F%2Fresources.groww.in%2Fweb-assets%2Fimg%2Fwebsite-logo%2Fgroww_logo.webp&imgrefurl=https%3A%2F%2Fgroww.in%2F&docid=JQYsylLaGuRA8M&tbnid=v4aFGyraepZr0M&vet=12ahUKEwiL37TKg9iWAxWKmq8BHZZyEzsQnPAOegQIdBAA..i&w=2022&h=552&hcb=2&ved=2ahUKEwiL37TKg9iWAxWKmq8BHZZyEzsQnPAOegQIdBAA" width="700">
 </p>
 
 > *"Every investor deserves to know what changed and why — because for Groww, better decisions start with better insights."*
