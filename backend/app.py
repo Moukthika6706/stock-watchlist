@@ -24,13 +24,17 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# The React dev server (port 3000) calls Flask (port 5000) cross-origin. Only the
-# listed origins are allowed, the JWT arrives in the Authorization header (not a
-# cookie) so credentials stay off, and FRONTEND_ORIGINS can override the list.
-FRONTEND_ORIGINS = [
-    origin.strip()
-    for origin in os.getenv('FRONTEND_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000').split(',')
-    if origin.strip()
+# The React dev server calls Flask (port 5000) cross-origin. Allowed origins: the
+# dev machine itself (localhost / 127.0.0.1) and private LAN addresses on ANY port,
+# because create-react-app falls back to 3001+ when 3000 is busy and prints a LAN
+# URL people open. Extra exact origins can be added via FRONTEND_ORIGINS. The JWT
+# arrives in the Authorization header (not a cookie), so credentials stay off.
+LOCAL_ORIGIN_PATTERN = (
+    r'^http://(localhost|127\.0\.0\.1|10\.\d{1,3}\.\d{1,3}\.\d{1,3}'
+    r'|192\.168\.\d{1,3}\.\d{1,3}|172\.(1[6-9]|2\d|3[01])\.\d{1,3}\.\d{1,3})(:\d+)?$'
+)
+FRONTEND_ORIGINS = [LOCAL_ORIGIN_PATTERN] + [
+    origin.strip() for origin in os.getenv('FRONTEND_ORIGINS', '').split(',') if origin.strip()
 ]
 CORS(
     app,
@@ -574,4 +578,6 @@ def db_check():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    # FLASK_HOST=0.0.0.0 exposes the API on the LAN (then point REACT_APP_API_URL at this
+    # machine's LAN address); the default keeps the debug server local-only.
+    app.run(debug=True, host=os.getenv('FLASK_HOST', '127.0.0.1'), port=int(os.getenv('FLASK_PORT', '5000')))

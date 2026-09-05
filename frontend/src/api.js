@@ -1,7 +1,27 @@
 import axios from 'axios';
 import { getToken, handleAuthFailure } from './auth';
 
-export const API_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000';
+const LOOPBACK_HOSTS = ['localhost', '127.0.0.1'];
+
+// Chrome blocks "private network" requests from a non-secure page to a loopback
+// address, so a page opened via its LAN URL (http://10.x.x.x:3001) cannot call
+// http://127.0.0.1:5000. When the page is not on localhost, aim the API at the same
+// host the page came from instead; the backend listens there when FLASK_HOST=0.0.0.0.
+function resolveApiUrl() {
+  const configured = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000';
+  try {
+    const url = new URL(configured);
+    const pageHost = window.location.hostname;
+    if (!LOOPBACK_HOSTS.includes(pageHost) && LOOPBACK_HOSTS.includes(url.hostname)) {
+      url.hostname = pageHost;
+    }
+    return url.origin;
+  } catch {
+    return configured;
+  }
+}
+
+export const API_URL = resolveApiUrl();
 
 const api = axios.create({ baseURL: API_URL, timeout: 15000 });
 
