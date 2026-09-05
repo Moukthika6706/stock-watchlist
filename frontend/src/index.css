@@ -1,0 +1,81 @@
+:root {
+  --green: #00c48c;
+  --green-dark: #00a876;
+  --green-soft: #8fddc3;
+  --green-ink: #0a2a1f;
+  --green-ink-muted: #0f4d3a;
+  --green-line: rgba(255, 255, 255, 0.32);
+
+  --ink: #16181d;
+  --ink-2: #3f4149;
+  --muted: #6b7280;
+  --muted-2: #8a8f98;
+  --line: #e6e8eb;
+  --line-soft: #eef0f2;
+  --bg: #fafbfb;
+  --card: #ffffff;
+
+  --up: #0b9e6e;
+  --down: #d93b3b;
+  --red: #e5383b;
+  --orange: #f2842a;
+  --yellow: #f5c400;
+
+  --sans: 'IBM Plex Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --radius: 16px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 16px;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+.mono {
+  font-family: var(--mono);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
