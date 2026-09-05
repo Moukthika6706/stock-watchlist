@@ -82,9 +82,15 @@ npm ci
 npm start
 ```
 
-Serves `http://localhost:3000`. Log in with the `DEMO_EMAIL` / `DEMO_PASSWORD` you put in
-`backend\.env`. The demo runbook, including how to re-arm the digest after any refresh, is
-in [DEMO.md](DEMO.md).
+Serves `http://localhost:3000` (or 3001 if 3000 is busy; CORS allows any localhost port).
+Log in with the `DEMO_EMAIL` / `DEMO_PASSWORD` you put in `backend\.env`. The demo runbook,
+including how to re-arm the digest after any refresh, is in [DEMO.md](DEMO.md).
+
+Opening the frontend through its LAN address (the `On Your Network` URL create-react-app
+prints, e.g. `http://10.0.0.5:3001`) also works, but only if the backend is reachable on
+that same address: set `FLASK_HOST=0.0.0.0` in `backend\.env` and restart `app.py`. The
+frontend then calls `http://10.0.0.5:5000` automatically, because browsers refuse to let a
+page served from a LAN address call `127.0.0.1`.
 
 ---
 
