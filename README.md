@@ -1,5 +1,12 @@
 # StockSense — See what changed. Know what matters.
 
+<p align="center">
+  <img src="logo.png" width="700">
+</p>
+
+> *"Every investor deserves to know what changed and why — because for Groww, better decisions start with better insights."*
+
+---
 A stock watchlist that doesn't just show prices — it tells you what actually changed since you last looked, and how much it matters.
 
 Built for **Code by Groww (CODE 2026)**.
